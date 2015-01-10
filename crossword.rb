@@ -6,15 +6,21 @@ class WordSearch
   end
 
   def create_board(x)
-    board << x
+    board << x.upcase
   end
 
   def word_search(word)
-    plus_board = board.map { |line| line.tr('a-z', '+') }
     board.map.with_index do |line, index|
-      require 'pry'
-      binding.pry
-      index if line.include?(word)
+      # if line.include?(word)
+        range = (line.index(word)...(word.length))
+        @new_board = line.chars.map.with_index do |letter, index|
+          if range.include?(index)
+            letter
+          else
+            '+'
+          end
+        end.join
+        print @new_board
     end
   end
 
@@ -25,7 +31,7 @@ until (x = gets.strip) == ''
 end
 
 puts game.board
-input = gets.strip.split(', ')
+input = gets.upcase.strip.split(', ')
 input.each do |word|
   game.word_search(word)
 end
